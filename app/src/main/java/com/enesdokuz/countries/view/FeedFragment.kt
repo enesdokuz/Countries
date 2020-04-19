@@ -41,7 +41,7 @@ class FeedFragment : Fragment() {
             recyclerview_feed_countrylist.visibility = View.GONE
             text_feed_error_message.visibility = View.GONE
             progress_feed_loading.visibility = View.VISIBLE
-            viewModel.refreshData()
+            viewModel.refreshDataFromAPI()
             swipe_feed_refresh_data.isRefreshing = false
         }
 

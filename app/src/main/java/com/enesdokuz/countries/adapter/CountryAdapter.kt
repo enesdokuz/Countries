@@ -39,7 +39,7 @@ class CountryAdapter(val countryList: ArrayList<Country>) : RecyclerView.Adapter
             placeholderProgressBar(holder.view.context))
 
         holder.view.setOnClickListener{
-            val action = FeedFragmentDirections.actionFeedFragmentToDetailFragment()
+            val action = FeedFragmentDirections.actionFeedFragmentToDetailFragment(countryUuid = countryList[position].uuid)
             Navigation.findNavController(it).navigate(action)
         }
     }
