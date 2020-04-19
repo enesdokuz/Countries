@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.enesdokuz.countries.R
+import com.enesdokuz.countries.databinding.FragmentDetailBinding
 import com.enesdokuz.countries.util.loadImage
 import com.enesdokuz.countries.util.placeholderProgressBar
 import com.enesdokuz.countries.viewmodel.DetailViewModel
@@ -17,12 +19,14 @@ class DetailFragment : Fragment() {
 
     private lateinit var viewModel: DetailViewModel
     private var countryUuid = 0
+    private lateinit var dataBinding : FragmentDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_detail, container, false)
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,14 +45,7 @@ class DetailFragment : Fragment() {
     fun observeLiveData() {
         viewModel.countryLiveData.observe(viewLifecycleOwner, Observer { country ->
             country?.let {
-                textview_detail_name.text = country.name
-                textview_detail_capital.text = country.capital
-                textview_detail_currency.text = country.currency
-                textview_detail_language.text = country.language
-                textview_detail_region.text = country.region
-                context?.let {
-                    imageview_detail_flag.loadImage(country.imageUrl, placeholderProgressBar(it))
-                }
+                dataBinding.country = it
             }
 
         })
